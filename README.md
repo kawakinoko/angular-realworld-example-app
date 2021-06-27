@@ -39,7 +39,45 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ### Building the project
 Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `-prod` flag for a production build.
 
+### Dockerize the project
+#### Dev Environment
+Edit **api_url** in **src/environments/environment.ts** to `<server ip where backend container located>:<Exposed port>` (Or other public backend ip)
 
+Run following command in git directory.
+```bash
+$ docker build -t realworld-frontend:dev . -f Dockerfile
+```
+#### Prod Environment
+Edit **api_url** in **src/environments/environment.prod.ts** to `<server ip where backend container located>:<Exposed port>` (Or other public backend ip)
+
+Run following command in git directory.
+```bash
+$ docker build -t realworld-frontend . -f Dockerfile.prod
+```
+
+### Run Dockerized image
+#### Dev Environment
+1. Using docker command
+```bash
+$  docker run -p <Port to expose>:8080 realworld-frontend:dev
+```
+2. Using docker-compose
+```bash
+$  git clone https://github.com/kawakinoko/realworld-dep.git
+$  cd realworld-dep
+$  docker-compose up realworld-fe
+```
+#### Prod Environment
+1. Using docker command
+```bash
+$  docker run -p <Port to expose>:8080 realworld-frontend
+```
+2. Using docker-compose
+```bash
+$  git clone https://github.com/kawakinoko/realworld-dep.git
+$  cd realworld-dep
+$  docker-compose -f docker-compose.yaml -f docker-compose.prod.yaml up realworld-fe
+```
 ## Functionality overview
 
 The example application is a social blogging site (i.e. a Medium.com clone) called "Conduit". It uses a custom API for all requests, including authentication. You can view a live demo over at https://angular.realworld.io
